@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.Action;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -28,12 +29,15 @@ public class Main extends JFrame {
     public static void main(String[] args) {
 
         final StringBuffer test = new StringBuffer();
+         
         JFrame frame = new JFrame();
         frame.setTitle("Text Message Application");
         frame.setSize(600, 600);
         frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         frame.setLayout(new GridLayout(3, 1));
 
+        int counter = 0;
+        
         JLabel lbl1 = new JLabel();
         JLabel lbl2 = new JLabel();
         JLabel lbl3 = new JLabel();
@@ -43,10 +47,13 @@ public class Main extends JFrame {
         final JTextField txtField = new JTextField(30);
         final JTextArea txtArea = new JTextArea();
         JButton send = new JButton("Send");
+        JButton space = new JButton("Space");
+        JButton backSpace = new JButton("BackSpace");
 
         JPanel panel1 = new JPanel();
         JPanel panel2 = new JPanel();
         JPanel panel3 = new JPanel();
+        JLabel bos = new JLabel();
         panel1.setLayout(new BorderLayout());
         panel2.setLayout(new GridLayout(4, 2));
         panel1.add(txtArea);
@@ -69,8 +76,17 @@ public class Main extends JFrame {
             char[] keys = rows[i].toCharArray();
             for (int j = 0; j < keys.length; j++) {
                 JButton buton = new JButton(Character.toString(keys[j]));
+                counter++;
                 buton.setSize(5, 5);
                 panel3.add(buton);
+                if (counter == 10) {
+                    panel3.add(backSpace);
+                }
+                
+                panel3.add(space);
+                
+               
+               
                 buton.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
@@ -88,7 +104,24 @@ public class Main extends JFrame {
                 txtField.setText(null);
             }
         });
+        
+         backSpace.addActionListener(new ActionListener() {
 
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        String s="";
+                        s = test.substring(0, test.length()-1);
+                        txtField.setText(s);
+                        
+                    }
+                });
+         space.addActionListener(new ActionListener() {
+
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        test.append(" ");
+                    }
+                });
         panel1.setBackground(Color.red);
         panel2.setBackground(Color.black);
         panel3.setBackground(Color.white);
