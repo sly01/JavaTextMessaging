@@ -26,6 +26,9 @@ import javax.swing.WindowConstants;
  */
 public class Main extends JFrame {
 
+    static int checker=1;
+    static String name;
+
     public static void main(String[] args) {
 
         final StringBuffer test = new StringBuffer();
@@ -38,6 +41,7 @@ public class Main extends JFrame {
 
         int counter = 0;
 
+
         JLabel lbl1 = new JLabel();
         JLabel lbl2 = new JLabel();
         JLabel lbl3 = new JLabel();
@@ -46,12 +50,12 @@ public class Main extends JFrame {
         JLabel lbl6 = new JLabel();
         final JTextField txtField = new JTextField(30);
         final JLabel lblFrame = new JLabel();
-        final JTextArea txtArea  = new JTextArea();
+        final JTextArea txtArea = new JTextArea();
         txtArea.setEditable(false);
         JButton send = new JButton("Send");
         JButton space = new JButton("Space");
         JButton backSpace = new JButton("BackSpace");
-
+        JButton shift = new JButton("Shift");
         JPanel panel1 = new JPanel();
         JPanel panel2 = new JPanel();
         JPanel panel3 = new JPanel();
@@ -71,51 +75,75 @@ public class Main extends JFrame {
 
         String row1 = "1234567890";
         String row2 = "qwertyuiop";
-        String row3 = "asdfghjkl;";
+        String row3 = "asdfghjkl;\"";
         String row4 = "zxcvbnm,./";
         String[] rows = {row1, row2, row3, row4};
-        for (int i = 0; i < rows.length; i++) {
-            char[] keys = rows[i].toCharArray();
-            for (int j = 0; j < keys.length; j++) {
-                JButton buton = new JButton(Character.toString(keys[j]));
-                counter++;
-                buton.setSize(5, 5);
-                panel3.add(buton);
-                if (counter == 10) {
-                    panel3.add(backSpace);
-                }
-
-                panel3.add(space);
-
-
-
-                buton.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        test.append(e.getActionCommand());
-                        txtField.setText(test.toString());
-                    }
-                });
+        System.out.println(checker);
+        shift.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                checker++;
+                System.out.println(checker);
             }
-        }
+        });
+            
+            for (int i = 0; i < rows.length; i++) {
+                char[] keys = rows[i].toCharArray();
+                for (int j = 0; j < keys.length; j++) {
+                    if(checker%2 == 0){
+                        name = Character.toString(keys[j]).toUpperCase();
+                    }
+                    if(checker%2 == 1)
+                        name = Character.toString(keys[j]);
+                    
+                    JButton buton = new JButton(name);
+                   
+                    counter++;
+                    // buton.setSize(5, 5);
+                    panel3.add(buton);
+
+                    if (counter == 10) {
+                        panel3.add(backSpace);
+                    }
+                    if (counter == 20) {
+                        panel3.add(shift);
+                    }
+                    panel3.add(space);
+
+
+
+                    buton.addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            test.append(e.getActionCommand());
+                            txtField.setText(test.toString());
+                        }
+                    });
+                }
+            }
+            
+            
 
         send.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-                txtArea.append(txtField.getText()+"\n"+"\n");
+                txtArea.append(txtField.getText() + "\n");
+                txtArea.append("\t\t\t\t\tmessage received\n");
                 txtField.setText("");
                 test.delete(0, test.length());
-                
+               
+
             }
         });
 
         backSpace.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-             //String s = txtField.getText();
-              if(txtField.getText().length() ==0)
-                  return;
-                test.setLength(test.length()-1);
+                //String s = txtField.getText();
+                if (txtField.getText().length() == 0) {
+                    return;
+                }
+                test.setLength(test.length() - 1);
                 txtField.setText(test.toString());
             }
         });
@@ -125,7 +153,7 @@ public class Main extends JFrame {
                 test.append(" ");
             }
         });
-       
+
         panel2.setBackground(Color.black);
         panel3.setBackground(Color.white);
 
@@ -138,3 +166,4 @@ public class Main extends JFrame {
         frame.setVisible(true);
     }
 }
+
