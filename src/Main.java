@@ -29,7 +29,7 @@ public class Main extends JFrame {
     public static void main(String[] args) {
 
         final StringBuffer test = new StringBuffer();
-         
+
         JFrame frame = new JFrame();
         frame.setTitle("Text Message Application");
         frame.setSize(600, 600);
@@ -37,7 +37,7 @@ public class Main extends JFrame {
         frame.setLayout(new GridLayout(3, 1));
 
         int counter = 0;
-        
+
         JLabel lbl1 = new JLabel();
         JLabel lbl2 = new JLabel();
         JLabel lbl3 = new JLabel();
@@ -45,7 +45,9 @@ public class Main extends JFrame {
         JLabel lbl5 = new JLabel();
         JLabel lbl6 = new JLabel();
         final JTextField txtField = new JTextField(30);
-        final JTextArea txtArea = new JTextArea();
+        final JLabel lblFrame = new JLabel();
+        final JTextArea txtArea  = new JTextArea();
+        txtArea.setEditable(false);
         JButton send = new JButton("Send");
         JButton space = new JButton("Space");
         JButton backSpace = new JButton("BackSpace");
@@ -82,11 +84,11 @@ public class Main extends JFrame {
                 if (counter == 10) {
                     panel3.add(backSpace);
                 }
-                
+
                 panel3.add(space);
-                
-               
-               
+
+
+
                 buton.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
@@ -100,29 +102,30 @@ public class Main extends JFrame {
         send.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-                txtArea.append(txtField.getText() + "\n");
-                txtField.setText(null);
+                txtArea.append(txtField.getText()+"\n"+"\n");
+                txtField.setText("");
+                test.delete(0, test.length());
+                
             }
         });
-        
-         backSpace.addActionListener(new ActionListener() {
 
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        String s="";
-                        s = test.substring(0, test.length()-1);
-                        txtField.setText(s);
-                        
-                    }
-                });
-         space.addActionListener(new ActionListener() {
-
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        test.append(" ");
-                    }
-                });
-        panel1.setBackground(Color.red);
+        backSpace.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+             //String s = txtField.getText();
+              if(txtField.getText().length() ==0)
+                  return;
+                test.setLength(test.length()-1);
+                txtField.setText(test.toString());
+            }
+        });
+        space.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                test.append(" ");
+            }
+        });
+       
         panel2.setBackground(Color.black);
         panel3.setBackground(Color.white);
 
